@@ -22,7 +22,7 @@ RUN swag init -d . -g cmd/main.go -o docs
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH GO111MODULE=on && \
     go mod download && go mod tidy && \
-    go build -o design-server ./cmd/main.go
+    go build -o design-server ./cmd/main.go && ls -al && pwd
 
 FROM jgoerzen/debian-base-standard
 
