@@ -27,7 +27,8 @@ jobs:
     - name: Donwload dependecies libraries
       run: |
         go mod tidy
-        go mod download        
+        go mod download
+        go get github.com/alecthomas/template
       
     - name: Generate swag documents
       run: swag init -d . -g cmd/main.go -o docs
