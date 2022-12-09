@@ -26,8 +26,8 @@ jobs:
       
     - name: Donwload dependecies libraries
       run: |
-        go mod download
         go mod tidy
+        go mod download        
       
     - name: Generate swag documents
       run: swag init -d . -g cmd/main.go -o docs
