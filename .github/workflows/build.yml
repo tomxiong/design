@@ -28,7 +28,9 @@ jobs:
       run: go mod download
       
     - name: Generate swag documents
-      run: swag init -d . -g ../cmd/main.go -o ./docs
+      run: |
+        export PATH=$PATH:$(go env GOPATH)/bin
+        swag init -d . -g ../cmd/main.go -o ./docs
 
     - name: Build
       run: go build -v ./...
