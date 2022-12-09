@@ -31,7 +31,4 @@ jobs:
       run: swag init -d . -g cmd/main.go -o docs
 
     - name: Build
-      run: go build -v ./...
-
-    - name: Test
-      run: go test -v ./...
+      run: go build -o .\target\design .\cmd\main.go
