@@ -1,0 +1,18 @@
+How to generate swagger file?
+```
+swag init -d . -g ../cmd/main.go -o ./docs
+```
+
+How to build it.
+```
+go build -o .\target\design.exe .\cmd\main.go
+```
+
+How to run it?
+
+---
+change ENV toml file to new file like below:
+```
+copy cmd/design-develop.toml cmd/design.toml
+
+target/design -conf=cmd\design.toml

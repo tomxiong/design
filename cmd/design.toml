@@ -1,0 +1,25 @@
+[Env]
+env =   "dev"
+
+[mongodb]
+host = "localhost:27017"
+username = "writer"
+password = "Rdis2fun"
+databaseName = "design"
+maxPoolSize = 20
+timeoutInSecond = 10000
+
+
+[log]
+Level = "Debug"
+Path = "logs/"
+FileName = "design"
+RotationCount = 10
+RotationSizeInMB = 100
+Suffix = ".%Y-%m-%d"
+
+[httpServer]
+network = "tcp"
+addr = ":59211"
+readTimeout = "1s"
+writeTimeout = "1s"
