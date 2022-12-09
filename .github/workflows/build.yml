@@ -28,7 +28,7 @@ jobs:
       run: |
         export PATH=$PATH:$(go env GOPATH)/bin
         go get -u github.com/swaggo/swag/cmd/swag@v1.7.0
-        swag init -d . -g ../cmd/main.go -o ./docs
+        /usr/local/bin/swag init -d . -g ../cmd/main.go -o ./docs
 
     - name: Build
       run: go build -v ./...
