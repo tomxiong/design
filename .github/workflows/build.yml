@@ -20,15 +20,15 @@ jobs:
       uses: actions/setup-go@v3
       with:
         go-version: 1.19
-        
+    
+    - name: Install swag
+      run: go install github.com/swaggo/swag/cmd/swag@v1.7.0
+      
     - name: Donwload dependecies libraries
-      run: go mod download
+      run: go mod download  
       
     - name: Generate swag documents
-      run: |
-        export PATH=$PATH:$(go env GOPATH)/bin
-        go get -u github.com/swaggo/swag/cmd/swag@v1.7.0
-        /usr/local/bin/swag init -d . -g ../cmd/main.go -o ./docs
+      run: swag init -d . -g ../cmd/main.go -o ./docs
 
     - name: Build
       run: go build -v ./...
