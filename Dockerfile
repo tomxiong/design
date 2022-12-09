@@ -1,6 +1,6 @@
 FROM golang:1.19-bullseye as builder
 
-RUN go install github.com/swaggo/swag/cmd/swag@v1.7.0
+RUN go install github.com/swaggo/swag/cmd/swag@latest
 
 ARG TARGETPLATFORM
 ARG TARGETARCH
@@ -22,7 +22,6 @@ COPY internal/ internal/
 RUN swag init -d . -g cmd/main.go -o docs
 
 RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH GO111MODULE=on && \
-    go get github.com/alecthomas/template && \
     go build -a -o desgin-server ./cmd/main.go
 
 FROM jgoerzen/debian-base-standard
