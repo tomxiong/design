@@ -31,4 +31,4 @@ jobs:
       run: swag init -d . -g cmd/main.go -o docs
 
     - name: Build
-      run: go build -o .\target\design .\cmd\main.go
+      run: go build -o ./target/design ./cmd/main.go
