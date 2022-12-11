@@ -42,6 +42,7 @@ func (s *Server) initRouter() {
 	group.POST("/member/register", s.register) // registration
 	group.POST("/member/setemail", s.setEmail) // update e-mail for registration
 	group.GET("/member/list", s.list)          // list
+	group.GET("/member/info", s.getMemberInfo) // info
 }
 
 func Cors(c *gin.Context) {
@@ -121,5 +122,19 @@ func (s *Server) list(c *gin.Context) {
 	role := c.Query("role")
 	status := c.Query("status")
 	data, err := s.design.ListMember(role, status)
+	handleResult(c, err, data)
+}
+
+// @Summary list member by role and status
+// @Description list member by role (include normal member, validator member and manager member) and status: new or other
+// @Tags member
+// @Produce  json
+// @Param token query string true "token"
+// @Success 200 {object} model.Member
+// @Failure 400 {object} resp
+// @Router /v1/member/info [get]
+func (s *Server) getMemberInfo(c *gin.Context) {
+	token := c.Query("token")
+	data, err := s.design.GetMember(token)
 	handleResult(c, err, data)
 }

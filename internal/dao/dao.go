@@ -63,6 +63,16 @@ func (d *Dao) GetMemberCollection() *mongo.Collection {
 }
 
 func (d *Dao) Register(ctx context.Context, mem model.Member) (bool, error) {
+	filter := bson.D{
+		{"token", mem.Token},
+	}
+	count, err := d.GetMemberCollection().CountDocuments(ctx, filter)
+	if err != nil {
+		return false, err
+	}
+	if count > 0 {
+		return false, nil
+	}
 	ir, err := d.GetMemberCollection().InsertOne(ctx, mem)
 	if err != nil {
 		return false, err
@@ -98,4 +108,13 @@ func (d *Dao) SetEmail(ctx context.Context, id primitive.ObjectID, email string)
 		return false, err
 	}
 	return ur.ModifiedCount > 0, nil
+}
+
+func (d *Dao) GetMember(ctx context.Context, token string) (model.Member, error) {
+	filter := bson.D{
+		{"token", token},
+	}
+	var result model.Member
+	err := d.GetMemberCollection().FindOne(ctx, filter).Decode(&result)
+	return result, err
 }

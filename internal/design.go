@@ -37,3 +37,7 @@ func (d *Design) ListMember(role, status string) ([]model.Member, error) {
 func (d *Design) SetEmail(mem model.Member) (bool, error) {
 	return d.dao.SetEmail(context.Background(), mem.Id, mem.Email)
 }
+
+func (d *Design) GetMember(token string) (model.Member, error) {
+	return d.dao.GetMember(context.Background(), token)
+}
