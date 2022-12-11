@@ -8,6 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 	swaggerFiles "github.com/swaggo/files"
 	ginSwagger "github.com/swaggo/gin-swagger"
+	"net/http"
 )
 
 // Server is http server.
@@ -19,7 +20,7 @@ type Server struct {
 // New a http server.
 func New(c *conf.HTTPServer, d *design.Design) *Server {
 	engine := gin.New()
-	engine.Use(loggerHandler, recoverHandler)
+	engine.Use(Cors, loggerHandler, recoverHandler)
 	go func() {
 		if err := engine.Run(c.Addr); err != nil {
 			panic(err)
@@ -41,6 +42,19 @@ func (s *Server) initRouter() {
 	group.POST("/member/register", s.register) // registration
 	group.POST("/member/setemail", s.setEmail) // update e-mail for registration
 	group.GET("/member/list", s.list)          // list
+}
+
+func Cors(c *gin.Context) {
+	c.Header("Access-Control-Allow-Origin", "*") // 可将将 * 替换为指定的域名
+	c.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+	c.Header("Access-Control-Allow-Headers", "*")
+	c.Header("Access-Control-Expose-Headers", "Content-Length, Access-Control-Allow-Origin, Access-Control-Allow-Headers, Cache-Control, Content-Language, Content-Type")
+	c.Header("Access-Control-Allow-Credentials", "true")
+	method := c.Request.Method
+	if method == "OPTIONS" {
+		c.AbortWithStatus(http.StatusNoContent)
+	}
+	c.Next()
 }
 
 func (s *Server) HandleResult(c *gin.Context, err error, data interface{}) {
