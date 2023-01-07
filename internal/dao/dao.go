@@ -101,7 +101,11 @@ func (d *Dao) SetEmail(ctx context.Context, token, email string) (bool, error) {
 	filter := bson.D{
 		{"token", token},
 	}
-	update := bson.M{"$set": bson.E{"email", email}}
+	update := bson.D{
+		{"$set", bson.D{
+			{"email", email}},
+		},
+	}
 	ur, err := d.GetMemberCollection().UpdateOne(ctx, filter, update)
 	if err != nil {
 		return false, err
