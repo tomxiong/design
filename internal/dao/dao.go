@@ -6,7 +6,6 @@ import (
 	"design/internal/model"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"time"
@@ -98,9 +97,9 @@ func (d *Dao) ListMember(ctx context.Context, role, status string) ([]model.Memb
 	return result, nil
 }
 
-func (d *Dao) SetEmail(ctx context.Context, id primitive.ObjectID, email string) (bool, error) {
+func (d *Dao) SetEmail(ctx context.Context, token, email string) (bool, error) {
 	filter := bson.D{
-		{"id", id},
+		{"token", token},
 	}
 	update := bson.M{"$set": bson.E{"email", email}}
 	ur, err := d.GetMemberCollection().UpdateOne(ctx, filter, update)
