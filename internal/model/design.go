@@ -9,4 +9,5 @@ type Member struct {
 	Domain string             `json:"domain,omitempty" bson:"domain"`
 	Role   string             `json:"role,omitempty" bson:"role"`     //Role: 0-normal,1-validator,3-manager,4-admin
 	Status string             `json:"status,omitempty" bson:"status"` //Status: 0-registered, 1-pending, 2-approved
+	Name   string             `json:"name,omitempty" bson:"name"`     // Name: 别名
 }
